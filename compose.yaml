@@ -1,0 +1,33 @@
+services:
+  django:
+    build:
+      context: webapi/
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+  bot:
+    build:
+      context: Bot/
+      dockerfile: Dockerfile
+    environment:
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+    volumes:
+      - "/codebase:/codebase"
+      - "/storage:/storage"
+    restart: always
+
+
+  db:
+      image: postgres:14-alpine
+      ports:
+        - 5489:5432
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_NAME: postgres
+
+      volumes:
+        - ~/apps/postgres:/var/lib/postgresql/data
