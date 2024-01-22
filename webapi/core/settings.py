@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ilp8qk1!mdar8xb6kwji^hnfc(iz=%!&bpp6u=x1of(hc79$&(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -76,28 +76,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
-# DATABASES = {    
-# "default": {        
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "postgres",
-#         "USER": "postgres",
-#         "PASSWORD": "postgres",
-#         "HOST": "db",
-#         "PORT": 5432,
-#     }
-# }
-
+# Production settings
 DATABASES = {    
 "default": {        
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "OfficeOutBot",
+        "NAME": "postgres",
         "USER": "postgres",
-        "PASSWORD": "Sakhi2000@",
-        "HOST": "localhost",
+        "PASSWORD": "postgres",
+        "HOST": "db",
         "PORT": 5432,
     }
 }
+
+# local settings
+# DATABASES = {    
+# "default": {        
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "OfficeOutBot",
+#         "USER": "postgres",
+#         "PASSWORD": "Sakhi2000@",
+#         "HOST": "localhost",
+#         "PORT": 5432,
+#     }
+# }
 
 
 # Password validation

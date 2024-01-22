@@ -10,13 +10,13 @@ services:
 
   bot:
     build:
-      context: Bot/
+      context: bot/
       dockerfile: Dockerfile
-    environment:
-      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
-    volumes:
-      - "/codebase:/codebase"
-      - "/storage:/storage"
+    # environment:
+    #   - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+    # volumes:
+    #   - "/codebase:/codebase"
+    #   - "/storage:/storage"
     restart: always
 
 
@@ -28,6 +28,5 @@ services:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
         POSTGRES_NAME: postgres
-
       volumes:
         - ~/apps/postgres:/var/lib/postgresql/data
