@@ -189,22 +189,31 @@ async def inform(user, chat_id, context):
     
     try:
         employees = requests.get("http://django:8000/api/employees").json()
-        
+        employee_id = -1
         for employee in employees:
             if employee['telegram_account'] == user['account']:
-                requests.post("http://django:8000/api/attendance", json={"employee": f"{employee['id']}", "permission": f"{user['permission'][2:]}", "reason": user['reason'], "arrival_time": f"{user['timeHour']}:{user['timeMinute']}:00"})
+                employee_id = employee['id']
+                # requests.post("http://django:8000/api/attendance", json={"employee": f"{employee['id']}", "permission": f"{user['permission'][2:]}", "reason": user['reason'], "arrival_time": f"{user['timeHour']}:{user['timeMinute']}:00"})
                 break
-    except:
-        chats[chat_id] = {
+        
+        if employee_id >= 0:
+            if user['permission'] == permissions[4]:
+                user['reason'] = permissions[4][2:]
+                
+            requests.post("http://django:8000/api/attendance", json={"employee": f"{employee_id}", "permission": f"{user['permission'][2:]}", "reason": user['reason'], "arrival_time": f"{user['timeHour']}:{user['timeMinute']}:00"})
+        else:
+            chats[chat_id] = {
             'permission': '',
             'reason': '',
             'account': '',
             'timeHour': '',
             'timeMinute': '',
-        }
-        keyboard = [[telegram.KeyboardButton("/start")]]
-        text = "Внутренняя ошибка сервера! Информация о вашем пользователе отсутствует в базе данных. Попробуйте написать команду /start еще раз."
-        return await send_message_to_bot(chat_id, text, keyboard, context)
+            }
+            keyboard = [[telegram.KeyboardButton("/start")]]
+            text = "Внутренняя ошибка сервера! Информация о вашем пользователе отсутствует в базе данных. Попробуйте написать команду /start еще раз."
+            return await send_message_to_bot(chat_id, text, keyboard, context)
+    except:
+        return BadRequest("Enternal server error!")
     
     
 
@@ -330,27 +339,15 @@ async def post_user_info(update, context):
     try:
         employees = requests.get("http://django:8000/api/employees").json()
         for employee in employees:
-            if employee['telegram_account'] == update.message.chat.username:
+            if employee['telegram_account'] == f"@{update.message.chat.username}":
                 return await getPermission(update, context)
-
+        
         requests.post("http://django:8000/api/employees", json={"fullname": f"{update.message.chat.first_name} {update.message.chat.last_name}", "telegram_account": f"@{update.message.chat.username}"})
         return await getPermission(update, context)
     except:
         return BadRequest("Enternal server error!")
 
 
-# async def server_error(chat_id, text, context):
-#     chats[chat_id] = {
-#         'permission': '',
-#         'reason': '',
-#         'timeHour': '',
-#         'timeMinute': '',
-#     }
-#     return await context.bot.send_message(
-#         chat_id=chat_id,
-#         text=text
-#         # reply_markup=ReplyKeyboardMarkup(keyboard)
-#     )
 
 # Test Bot
 application = ApplicationBuilder().token('6603834308:AAGyQUx2e1hAOEKV0nnjYIARRb1boN35S-A').build()
@@ -370,21 +367,14 @@ application = ApplicationBuilder().token('6603834308:AAGyQUx2e1hAOEKV0nnjYIARRb1
 #     database="botout"
 # )
 
-# async def get_users(update):
-#     users = requests.get("http://django:8000/api/schema/swagger-ui/#/employees/employees_list")
-#     return send_message_to_bot(update.chat.id, users)
-# users = requests.get("http://django:8000/api/schema/swagger-ui/#/employees/employees_list")
-#     json_res = Response.json(users.raw)
-
-#     result = json.loads(json_res)
 
 
-# start_handler = CommandHandler('start', post_user_info)
+
 start_handler = CommandHandler('start', post_user_info)
 
 message_handler = MessageHandler(filters.TEXT, messageHandler)
 
-# application.add_handler(test_handler)
+
 application.add_handler(start_handler)
 application.add_handler(message_handler)
 
@@ -392,8 +382,3 @@ application.add_handler(message_handler)
 
 application.run_polling()
 
-
-# import requests
-
-# response = requests.post("https://docs.python-telegram-bot.org/en/v20.7/", data={"name": "sadasd"})
-# logging.info(response
