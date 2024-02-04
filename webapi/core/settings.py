@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+from datetime import timedelta
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,8 +43,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     'drf_spectacular_sidecar',
+    'rest_framework_simplejwt',
     # local apps
     'attendance.apps.AttendanceConfig',
+    'web.apps.WebConfig',
     
 ]
 
@@ -61,7 +65,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,31 +78,32 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # # Production settings
-DATABASES = {    
-"default": {        
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "db",
-        "PORT": 5432,
-    }
-}
-
-# local settings
 # DATABASES = {    
 # "default": {        
 #         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "OfficeOutBot",
+#         "NAME": "postgres",
 #         "USER": "postgres",
-#         "PASSWORD": "Sakhi2000@",
-#         "HOST": "localhost",
+#         "PASSWORD": "postgres",
+#         "HOST": "db",
 #         "PORT": 5432,
 #     }
 # }
+
+# local settings
+DATABASES = {    
+"default": {        
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "OfficeOutBot",
+        "USER": "postgres",
+        "PASSWORD": "Sakhi2000@",
+        "HOST": "localhost",
+        "PORT": 5432,
+    }
+}
 
 
 # Password validation
@@ -137,6 +142,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -145,10 +154,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     # YOUR SETTINGS
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Employee attendance system',
     'DESCRIPTION': 'System for controling the employee',
     'VERSION' : '1.0.0',
+}
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }

@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block content %}
+<h1>{{employee.fullname}}</h1>
+<h1>{{attendances.items}}</h1>
+
+<table>
+  <caption>Attendances</caption>
+  <tr>
+    <th>Id</th>
+    <th>Permission</th>
+    <th>Reason</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Control</th>
+  </tr>
+
+ {% for object in attendances%}
+  <tr>
+    <td>{{object.id}}</td>
+    <td>{{object.permission}}</td>
+    <td>{{object.reason}}</td>
+    <td>{{object.created_at}}</td>
+    <td>{{object.arrival_time}}</td>
+    <td><a href="{% url "attendance_detail" object.pk %}"><i class="fa-solid fa-pencil"></i></a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SoftClub HR</title>
+    <link rel="stylesheet" href="{% static "/css/style.css" %}" />
+    <link rel="stylesheet" href="{% static "/css/all.css" %}" />
+  </head>
+  <body>
+    <div class="main-section">
+      <div class="navbar">
+        <div class="logo">
+          <img src="{% static "./images/logo.png" %} " alt="" />
+        </div>
+        <ul>
+          <li>
+            <a href="{% url "employee_list" %}"><i class="fa-solid fa-user-tie"></i> Employees</a>
+          </li>
+          <li>
+            <a href="{% url "attendance_list" %}"
+              ><i class="fa-solid fa-clipboard-user"></i> Attendances</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <div class="nav-menu">
+          <form action="">
+            <input type="search" placeholder="search..." />
+          </form>
+        </div>
+        <div class="main-content">
+          {% block content %}{% endblock content %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

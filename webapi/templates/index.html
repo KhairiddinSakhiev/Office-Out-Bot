@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block content %}
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Fullname</th>
+    <th>Permission</th>
+    <th>Reason</th>
+    <th>Date</th>
+    <th>Time</th>
+  </tr>
+
+  {% for object in object_list %}
+  <tr>
+    <td>{{object.id}}</td>
+    <td><a href="{% url "attendance_detail" object.pk %}">{{object.employee}}</a></td>
+    <td>{{object.permission}}</td>
+    <td>{{object.reason}}</td>
+    <td>{{object.created_at}}</td>
+    <td>{{object.arrival_time}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% block content %}
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Fullname</th>
+    <th>Telegram account</th>
+    <th>Phone number</th>
+  </tr>
+
+  {% for object in object_list %}
+  <tr>
+    <td>{{object.id}}</td>
+    <td><a href="{% url "employee_detail" object.pk %}">{{object.fullname}}</a></td>
+    <td>{{object.telegram_account}}</td>
+    <td>{{object.phone_number}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock content %}
