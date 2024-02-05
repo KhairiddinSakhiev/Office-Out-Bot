@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block content %}
+<a href="{% url "attendance_list" %}" class="go-back"><i class="fa-solid fa-arrow-left"></i></a>
 <h1>{{employee.fullname}}</h1>
 <h1>{{attendances.items}}</h1>
 
@@ -10,17 +11,17 @@
     <th>Reason</th>
     <th>Date</th>
     <th>Time</th>
-    <th>Control</th>
+    <th>Created at</th>
   </tr>
 
  {% for object in attendances%}
   <tr>
     <td>{{object.id}}</td>
-    <td>{{object.permission}}</td>
+    <td><a href="{% url "attendance_detail" object.pk %}">{{object.permission}}</a></td>
     <td>{{object.reason}}</td>
     <td>{{object.created_at}}</td>
     <td>{{object.arrival_time}}</td>
-    <td><a href="{% url "attendance_detail" object.pk %}"><i class="fa-solid fa-pencil"></i></a></td>
+    <td>{{object.created_at}}</td>
   </tr>
   {% endfor %}
 </table>

@@ -90,10 +90,38 @@ td:nth-child(2){
     text-align: start;
 }
 td:nth-child(2) a{
-    color: rgb(80, 158, 255);;
+    color: rgb(80, 158, 255);
 }
 caption{
     font-size: 1.5em;
     font-weight: 700;
     padding: 10px 15px;
+}
+.detail{
+    font-size: 1.3em;
+}
+.detail-container{
+    width: 70%;
+    margin: auto;
+    padding: 20px;
+}
+.detail-container table tr td:first-child{
+    width: 25%;
+    text-align: start;
+    font-weight: 700;
+}
+.go-back{
+    font-size: 1.5em;
+    color: #111827;
+}
+.go-back:hover{
+    color: grey;
+}
+table tr td:nth-child(2) a{
+    letter-spacing: 1px;
+    font-size: 1.2em;
+    
+}
+body{
+    color: #111827;
 }
