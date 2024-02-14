@@ -1,5 +1,7 @@
 services:
   django:
+    image: sakhi2000/attendance-service
+    container_name: attendance-service
     build:
       context: webapi/
       dockerfile: Dockerfile
@@ -7,15 +9,20 @@ services:
       - 8000:8000
     depends_on:
       - db
-
+      - bot
   bot:
+    image: sakhi2000/attendance-bot-service
+    container_name: attendance-bot-service
     build:
       context: bot/
       dockerfile: Dockerfile
     restart: always
+    volumes:
+      - ./logs:/home/logs
 
   db:
-      image: postgres:14-alpine
+      image: postgres
+      container_name: attendance-service-db
       ports:
         - 5489:5432
       environment:
@@ -23,4 +30,7 @@ services:
         POSTGRES_PASSWORD: postgres
         POSTGRES_NAME: postgres
       volumes:
-        - ~/apps/postgres:/var/lib/postgresql/data
+        - attendance-data:/var/lib/postgresql/data
+
+volumes:
+  attendance-data:

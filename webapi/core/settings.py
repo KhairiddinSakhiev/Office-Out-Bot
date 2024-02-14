@@ -82,28 +82,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # # Production settings
-# DATABASES = {    
-# "default": {        
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "postgres",
-#         "USER": "postgres",
-#         "PASSWORD": "postgres",
-#         "HOST": "db",
-#         "PORT": 5432,
-#     }
-# }
-
-# local settings
 DATABASES = {    
 "default": {        
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "OfficeOutBot",
+        "NAME": "postgres",
         "USER": "postgres",
-        "PASSWORD": "Sakhi2000@",
-        "HOST": "localhost",
+        "PASSWORD": "postgres",
+        "HOST": "db",
         "PORT": 5432,
     }
 }
+
+# local settings
+# DATABASES = {    
+# "default": {        
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "OfficeOutBot",
+#         "USER": "postgres",
+#         "PASSWORD": "Sakhi2000@",
+#         "HOST": "localhost",
+#         "PORT": 5432,
+#     }
+# }
 
 
 # Password validation

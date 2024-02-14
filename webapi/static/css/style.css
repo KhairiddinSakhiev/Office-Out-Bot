@@ -60,11 +60,15 @@ input{
 }
 .main-content{
     padding: 20px;
+    height: 80vh;
+    overflow: auto;
 }
+
 table, th, td{
     border: 1px solid;
     border-collapse: collapse;
     padding: 10px;
+    position: relative;
 }
 
 th:first-child{
@@ -120,8 +124,14 @@ caption{
 table tr td:nth-child(2) a{
     letter-spacing: 1px;
     font-size: 1.2em;
-    
 }
 body{
     color: #111827;
 }
+/* .main-content table tr:first-child, 
+.main-content table tr:first-child th{
+    border: 1px solid;
+    position: sticky;
+    top: -23px;
+    background-color: rgb(255, 255,255);
+} */

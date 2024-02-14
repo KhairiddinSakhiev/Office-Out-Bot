@@ -5,7 +5,7 @@ from django.views import generic
 from attendance.models import *
 
 class AttendanceListView(generic.ListView):
-    queryset = Attendance.objects.order_by("created_at")
+    queryset = Attendance.objects.order_by("-id")
     template_name = "index.html"
 
 class AttendanceDetail(generic.DetailView):
@@ -22,7 +22,7 @@ class EmployeeDetail(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["attendances"] = Attendance.objects.filter(employee = self.kwargs['pk']).order_by('-arrival_time')
+        context["attendances"] = Attendance.objects.filter(employee = self.kwargs['pk']).order_by('-created_at')
         return context
     template_name = "employee_detail.html"
     
